@@ -1,5 +1,5 @@
 import { context } from 'fetch-h2'
-import { ContentAddress, Key, PredicateAddress, Solution } from './solutions';
+import { ContentAddress, PredicateAddress, Solution } from './solutions';
 
 
 const { fetch, disconnect, disconnectAll, onPush } = context({httpProtocol: "http2"});
@@ -72,8 +72,11 @@ export class EssentialClient {
         return txt
     }
 
-    async queryState(contentAddress: ContentAddress, key: Key){
-        let req = await fetch(this.baseUrl+"/query-state/"+contentAddress+"/"+key)
+    async queryState(contentAddress: ContentAddress, hexKey: String[]){
+        let toBeQueried = this.baseUrl+"/query-state/"+contentAddress+"/"+hexKey
+        // console.log(toBeQueried)
+        let req = await fetch(toBeQueried)
+        // console.log(req.status)
         return await(req).json()
     }
 }
