@@ -56,7 +56,10 @@ export class EssentialClient {
     }
 
     async submitSolution(solution: Solution){
-        let req = await fetch(this.baseUrl+"/submit-solution",
+        console.log("Pre-Fetch")
+        let url = this.baseUrl+"/submit-solution"
+        console.log("URL: "+url)
+        let req = await fetch(url,
             {
                 method: "POST",
                 body: solution.serialize(),
@@ -65,9 +68,8 @@ export class EssentialClient {
                 }
             }
         )
-        let txt = await(req).text()
-        console.log(txt)
-        return await(req).json()
+        let txt = await(req).json()
+        return txt
     }
 }
 
