@@ -1,10 +1,10 @@
 
 export type Word = number; //i64 (maybe u64?)
-type Key = Word[];
+export type Key = Word[];
 type Value = Word[]; 
 
 export type Hash = String;  
-type ContentAddress = Hash; 
+export type ContentAddress = Hash; 
 
 export type PredicateAddress = {
     contract: ContentAddress;
