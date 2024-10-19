@@ -1,4 +1,5 @@
 import { context } from 'fetch-h2'
+import { PredicateAddress, Solution } from './solutions';
 
 
 const { fetch, disconnect, disconnectAll, onPush } = context({httpProtocol: "http2"});
@@ -46,6 +47,26 @@ export class EssentialClient {
             vals.push(end)
         }
         let req = await fetch(this.baseUrl+`/list-contracts`+makeUrlOptions(keys, vals))
+        return await(req).json()
+    }
+
+    async getPredicate(address: PredicateAddress){
+        let req = await fetch(this.baseUrl+`/get-predicate/`+address.contract+"/"+address.predicate)
+        return await(req).json()
+    }
+
+    async submitSolution(solution: Solution){
+        let req = await fetch(this.baseUrl+"/submit-solution",
+            {
+                method: "POST",
+                body: solution.serialize(),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            }
+        )
+        let txt = await(req).text()
+        console.log(txt)
         return await(req).json()
     }
 }
